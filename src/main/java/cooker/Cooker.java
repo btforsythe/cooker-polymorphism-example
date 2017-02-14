@@ -1,10 +1,10 @@
 package cooker;
 
-public class Cooker {
+// interfaces differ from classes by using the interface keyword in declaration
+public interface Cooker {
 
-	public void cook() {
-		
-		System.out.println("I cooked it!");
-	}
+	// interfaces declare *abstract* methods
+	// this says that all Cookers must implement a cook() method
+	public void cook();
  
 }
