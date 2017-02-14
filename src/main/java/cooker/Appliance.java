@@ -12,5 +12,8 @@ public abstract class Appliance {
 	}
 	public void togglePower() {
 		powered = !powered;
+		
+		System.out.println("Power for " + this + " is: " + powered);
 	}
 }
+ 

@@ -1,5 +1,8 @@
 package cooker;
 
+import java.util.Arrays;
+import java.util.List;
+
 public class CookerApp {
 
 	public static void main(String[] args) {
@@ -26,26 +29,54 @@ public class CookerApp {
 		manager.handleCooking(kmPizzaOven);
 		manager.handleCooking(kmGrill);
 
+		demonstrateAppliances();
+	}
+
+	private static void demonstrateAppliances() {
 		System.out.println("***************************");
 		System.out.println("The GM is responsible for turning on the power");
 
 		// We can't instantiate abstract classes or interfaces
 		// Appliance genericAppliance = new Appliance();
-
 		Appliance myDishwasher = new Dishwasher();
 		System.out.println("Is my dishwasher on? " + myDishwasher.isPowered());
 		myDishwasher.togglePower();
 		System.out.println("Is my dishwasher on? " + myDishwasher.isPowered());
 
-		Grill mahGrill = new Grill();
+		// Grills are both Appliances and Cookers 
+		Grill myGrill = new Grill();
+		// We can power them on/off since they are Appliances
+		System.out.println("Is my grill on? " + myGrill.isPowered());
+		myGrill.togglePower();
+		System.out.println("Is my grill on? " + myGrill.isPowered());
+		// We can cook on them since they are Cookers
+		System.out.print("When I cook: ");
+		myGrill.cook();
 		
-		// can refer to the grill as a Cooker or an Appliance
-		Appliance grillAsAnAppliance = mahGrill;
-		Cooker grillAsACooker = mahGrill;
+		// we can refer to the grill as a an Appliance
+		Appliance grillAsAnAppliance = myGrill;
+		// then we can toggle its power
+		grillAsAnAppliance.togglePower();
+		// but we can't cook on it - the following line would not compile
+		// grillAsAnAppliance.cook();
 		
-		System.out.println("Is my grill on? " + mahGrill.isPowered());
-		mahGrill.togglePower();
-		System.out.println("Is my grill on? " + grillAsAnAppliance.isPowered());
+		// we can refer to the grill as a Cooker
+		Cooker grillAsACooker = myGrill;
+		// then we can cook on it
+		grillAsACooker.cook();
+		// but we can't toggle it's power - the following line would not compile
+		// grillAsACooker.togglePower();
+
+		System.out.println("Do your job, GM!");
+		
+		GeneralManager gm = new GeneralManager();
+		List<Appliance> appliances = Arrays.asList(myDishwasher, myGrill);
+		
+		gm.powerEverything(appliances);
+		
+		PizzaOven myPizzaOven = new PizzaOven();
+		// this won't compile because PizzaOven is not an Appliance
+		// List<Appliance> notAppliances = Arrays.asList(myPizzaOven);
 	}
 
 }
